@@ -15,13 +15,10 @@ public class ArrayUtility {
     }
 
     public static double average(int[] array) {
-        int sum = 0;
-        for (int i = 0; i < array.length; i++){
-            sum += array[i];
-        }
-        double average = sum/array.length;
-        int averageTimesHundred = (int) (average * 100);
-        return averageTimesHundred/100;
+        double sum = sum(array);
+        double length = array.length;
+        double result = sum/length;
+        return Math.floor(result * 100.0) / 100.0;
     }
 
     public static int minimum(int[] array) {
@@ -55,22 +52,23 @@ public class ArrayUtility {
     }
 
     public static int[] reverseOne(int[] array) {
-        int[] myArray;
-        for (int i = array.length-1; i >= 0; i--){
-            for (int n = 0; n < array.length; n++)
-            myArray[n] = array[i];
+        int length = array.length;
+        int myArray[] = new int[length];
+        int index = 0;
+        for (int i = length-1; i >= 0; i--)
+        {
+            myArray[index] = array[i];
+            index++;
         }
         return myArray;
     }
 
     public static void reverseTwo(int[] array) {
-        int[] myArray;
-        for (int i = array.length - 1; i >= 0; i--) {
-            int n = 0;
-            if (n < array.length) {
-                myArray[n] = array[i];
-                n++;
-            }
+        int replaceValue = array.length-1;
+        for (int i=0; i<array.length/2; i++) {
+            int temp = array[i];
+            array[i]=array[replaceValue-i];
+            array[replaceValue-i]=temp;
         }
     }
 
@@ -81,12 +79,11 @@ public class ArrayUtility {
         return false;
         }
 
-    }
 
     public static boolean linearSearchString(String[] array, String str) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(str)) return true;
-        }
+        for (String word : array) {
+            if (word.equals(str)) return true;
+         }
         return false;
     }
 
@@ -105,39 +102,48 @@ public class ArrayUtility {
     public static String toString(int[] array) {
         String arrayToString = "";
         for (int i = 0; i < array.length; i++){
-            arrayToString = arrayToString + array[i];
-        }
+            arrayToString += array[i];
+                if (i!=array.length-1) arrayToString += ", ";
+            }
         return arrayToString;
-    }
+        }
+
 
     public static boolean twoSum(int[] array, int num) {
-        boolean check = false;
-        for (int i = 0; i < array.length; i++){
-            for (int n = 0; n < array.length && n != i; n++){
-                check = array[i]+array[n] == num;
+        for (int checkNumber=0; checkNumber<array.length; checkNumber++) {
+            for (int i=checkNumber+1; i<array.length; i++) {
+                if (array[checkNumber]+array[i]==num) return true;
             }
         }
-        return check;
+        return false;
     }
 
     public static void shiftRight(int[] array) {
-        array[0] = array[array.length-1];
-        for (int i = 1; i < array.length; i++){
-            array[i] = array[i-1];
+
+        int end = array[array.length-1];
+        for (int i = array.length - 1; i > 0; i--) {
+            array[i] = array[i - 1];
         }
+        array[0] = end;
+
     }
 
     public static void shiftLeft(int[] array) {
-        array[array.length-1] = array [0];
-        for (int i = 0; i < array.length-1; i++){
+        int start = array[0];
+        for (int i = 0; i<array.length-1; i++)
+        {
             array[i] = array[i+1];
         }
+        array[array.length-1] = start;
+
     }
 
     public static void shiftRightNTimes(int[] array, int n) {
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++)
+        {
             shiftRight(array);
         }
+
     }
 
     public static void shiftLeftNTimes(int[] array, int n) {
